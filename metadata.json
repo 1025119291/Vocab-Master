@@ -1,0 +1,5 @@
+{
+  "name": "Vocab Master",
+  "description": "An interactive English vocabulary drill tool for Unit 3. Features continuous read-along, random/sequential modes, and AI-powered example sentence generation.",
+  "requestFramePermissions": []
+}
