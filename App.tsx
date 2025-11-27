@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { allUnits } from './data';
 import { WordCard } from './components/WordCard';
@@ -21,6 +22,8 @@ export default function App() {
     rate: 1.0,
     selectedVoiceURI: null,
     quizMode: false,
+    repetitionCount: 2,
+    repetitionInterval: 1.0
   });
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -118,31 +121,41 @@ export default function App() {
     if (!currentItems[itemIndex]) return;
     const item = currentItems[itemIndex];
     
-    const finishCycle = () => {
-      if (!autoContinue) return;
-      const delay = settings.gapDuration * 1000;
-      
-      timerRef.current = setTimeout(() => {
-        const nextIdx = getNextIndex(itemIndex);
-        setCurrentIndex(nextIdx);
-      }, delay);
+    // Config from settings
+    const totalReps = settings.repetitionCount;
+    const repGapMs = settings.repetitionInterval * 1000;
+    const nextWordGapMs = settings.gapDuration * 1000;
+
+    let playedCount = 0;
+
+    const playSequence = () => {
+        playText(item.word, 'en-US', () => {
+            playedCount++;
+            
+            // Check if user stopped playback during speech
+            // Note: We check the ref implicitly because if stopped, component re-renders or logic stops?
+            // Actually, we need to pass a flag or rely on onEnd not firing if cancelled.
+            // But if autoContinue is false, we stop. 
+            if (!autoContinue) return;
+
+            if (playedCount < totalReps) {
+                // Schedule next repetition
+                timerRef.current = setTimeout(() => {
+                    playSequence();
+                }, repGapMs);
+            } else {
+                // Finished all repetitions, schedule next word
+                timerRef.current = setTimeout(() => {
+                    const nextIdx = getNextIndex(itemIndex);
+                    setCurrentIndex(nextIdx);
+                }, nextWordGapMs);
+            }
+        });
     };
 
-    // 1. Speak English (1st time)
-    playText(item.word, 'en-US', () => {
-        if (!autoContinue) return;
+    playSequence();
 
-        // 2. Pause between repetitions (1 second)
-        timerRef.current = setTimeout(() => {
-             // 3. Speak English (2nd time)
-             playText(item.word, 'en-US', () => {
-                 if (!autoContinue) return;
-                 // 4. Wait for gapDuration then Next
-                 finishCycle();
-             });
-        }, 1000); 
-    });
-  }, [currentItems, settings.gapDuration, getNextIndex, playText]);
+  }, [currentItems, settings, getNextIndex, playText]);
 
 
   // Effect to trigger speech when index changes IF playing

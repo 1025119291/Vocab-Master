@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Play, Pause, SkipForward, SkipBack, Shuffle, Repeat, Settings2, Mic2, EyeOff } from 'lucide-react';
+import { Play, Pause, SkipForward, SkipBack, Shuffle, Repeat, Settings2, Mic2, EyeOff, Timer, RotateCw } from 'lucide-react';
 import { PlayMode, AppSettings } from '../types';
 
 interface ControlPanelProps {
@@ -126,11 +127,45 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                     </button>
                 </div>
 
-                {/* Speed Controls */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Repetition Count */}
                     <div className="space-y-2">
                         <div className="flex justify-between text-xs font-medium text-slate-500">
-                            <span>Repeat Gap</span>
+                            <span className="flex items-center gap-1"><RotateCw className="w-3 h-3"/> Repeat Word</span>
+                            <span>{settings.repetitionCount}x</span>
+                        </div>
+                        <input 
+                            type="range" 
+                            min="1" 
+                            max="5" 
+                            step="1"
+                            value={settings.repetitionCount}
+                            onChange={(e) => onSettingsChange({ ...settings, repetitionCount: parseInt(e.target.value) })}
+                            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                        />
+                    </div>
+
+                    {/* Repetition Interval */}
+                    <div className="space-y-2">
+                        <div className="flex justify-between text-xs font-medium text-slate-500">
+                            <span className="flex items-center gap-1"><Timer className="w-3 h-3"/> Gap between repeats</span>
+                            <span>{settings.repetitionInterval}s</span>
+                        </div>
+                        <input 
+                            type="range" 
+                            min="0.5" 
+                            max="3" 
+                            step="0.5"
+                            value={settings.repetitionInterval}
+                            onChange={(e) => onSettingsChange({ ...settings, repetitionInterval: parseFloat(e.target.value) })}
+                            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                        />
+                    </div>
+
+                    {/* Gap Between Words */}
+                    <div className="space-y-2">
+                        <div className="flex justify-between text-xs font-medium text-slate-500">
+                            <span className="flex items-center gap-1"><Timer className="w-3 h-3"/> Gap before Next Word</span>
                             <span>{settings.gapDuration}s</span>
                         </div>
                         <input 
@@ -144,9 +179,10 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                         />
                     </div>
 
+                    {/* Speed */}
                     <div className="space-y-2">
                         <div className="flex justify-between text-xs font-medium text-slate-500">
-                            <span>Speed</span>
+                            <span>Speech Rate</span>
                             <span>{settings.rate}x</span>
                         </div>
                         <input 

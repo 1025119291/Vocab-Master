@@ -1,3 +1,4 @@
+
 export interface VocabularyItem {
   word: string;
   phonetic: string;
@@ -20,4 +21,6 @@ export interface AppSettings {
   rate: number; // speech rate 0.5 - 2
   selectedVoiceURI: string | null; // URI of the selected speech synthesis voice
   quizMode: boolean; // If true, translation starts hidden
+  repetitionCount: number; // Number of times to read the word
+  repetitionInterval: number; // Time between repetitions in seconds
 }
