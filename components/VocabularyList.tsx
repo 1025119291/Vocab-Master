@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { VocabularyItem } from '../types';
 
@@ -23,7 +24,7 @@ export const VocabularyList: React.FC<VocabularyListProps> = ({ title, items, cu
   }, [currentIndex]);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-slate-100 flex flex-col h-full max-h-[500px]">
+    <div className="bg-white rounded-xl shadow-lg border border-slate-100 flex flex-col h-full">
       <div className="p-4 border-b border-slate-100 bg-slate-50 rounded-t-xl">
         <h3 className="font-semibold text-slate-700">{title} ({items.length})</h3>
       </div>
@@ -41,10 +42,10 @@ export const VocabularyList: React.FC<VocabularyListProps> = ({ title, items, cu
                 }`}
             >
                 <div className="flex items-center justify-between">
-                    <span className={`font-semibold text-lg ${index === currentIndex ? 'text-blue-700' : 'text-slate-800'}`}>
+                    <span className={`font-semibold text-lg truncate flex-1 ${index === currentIndex ? 'text-blue-700' : 'text-slate-800'}`}>
                         {item.word}
                     </span>
-                    <span className="text-xs text-slate-400 font-mono ml-2">{item.phonetic}</span>
+                    <span className="text-xs text-slate-400 font-mono ml-2 shrink-0">{item.phonetic}</span>
                 </div>
                 <div className={`text-sm mt-1 truncate ${index === currentIndex ? 'text-blue-600/80' : 'text-slate-500'}`}>
                     {item.translation}

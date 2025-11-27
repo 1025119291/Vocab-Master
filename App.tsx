@@ -132,10 +132,6 @@ export default function App() {
         playText(item.word, 'en-US', () => {
             playedCount++;
             
-            // Check if user stopped playback during speech
-            // Note: We check the ref implicitly because if stopped, component re-renders or logic stops?
-            // Actually, we need to pass a flag or rely on onEnd not firing if cancelled.
-            // But if autoContinue is false, we stop. 
             if (!autoContinue) return;
 
             if (playedCount < totalReps) {
@@ -201,7 +197,7 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 text-slate-900 pb-12 font-sans">
       {/* Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 h-20 md:h-16 flex flex-col md:flex-row items-center justify-between gap-2 py-2 md:py-0">
+        <div className="max-w-[95%] xl:max-w-7xl mx-auto px-4 h-20 md:h-16 flex flex-col md:flex-row items-center justify-between gap-2 py-2 md:py-0">
           <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
             <div className="flex items-center gap-3">
                 <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-2 rounded-lg text-white shadow-md">
@@ -234,11 +230,11 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="max-w-[95%] xl:max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            {/* Left Column: Card & Controls */}
-            <div className="lg:col-span-7 flex flex-col gap-6">
+            {/* Left Column: Card & Controls (Takes up 75% width now) */}
+            <div className="lg:col-span-9 flex flex-col gap-6">
                 {currentItems.length > 0 ? (
                     <WordCard 
                         item={currentItems[currentIndex]} 
@@ -246,7 +242,7 @@ export default function App() {
                         autoHideTranslation={settings.quizMode}
                     />
                 ) : (
-                    <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center justify-center min-h-[400px] text-slate-400">
+                    <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center justify-center min-h-[500px] text-slate-400">
                         <p>No words in this unit.</p>
                     </div>
                 )}
@@ -264,8 +260,8 @@ export default function App() {
                 />
             </div>
 
-            {/* Right Column: List */}
-            <div className="lg:col-span-5 h-[500px] lg:h-auto">
+            {/* Right Column: List (Takes up 25% width, sticky) */}
+            <div className="lg:col-span-3 h-[500px] lg:h-[calc(100vh-140px)] sticky top-24">
                 <VocabularyList 
                     title={currentUnit?.title || "Word List"}
                     items={currentItems}
