@@ -1,8 +1,6 @@
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { allUnits } from './data';
-import { WordCard } from './components/WordCard';
-import { ControlPanel } from './components/ControlPanel';
+import { UnifiedWordCard } from './components/UnifiedWordCard';
 import { VocabularyList } from './components/VocabularyList';
 import { UnitSelector } from './components/UnitSelector';
 import { PlayMode, AppSettings } from './types';
@@ -233,31 +231,28 @@ export default function App() {
       <main className="max-w-[95%] xl:max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            {/* Left Column: Card & Controls (Takes up 75% width now) */}
-            <div className="lg:col-span-9 flex flex-col gap-6">
+            {/* Left Column: Unified Card (Takes up 75% width now) */}
+            <div className="lg:col-span-9 flex flex-col gap-4">
                 {currentItems.length > 0 ? (
-                    <WordCard 
+                    <UnifiedWordCard 
                         item={currentItems[currentIndex]} 
                         onSpeak={handleManualSpeak}
                         autoHideTranslation={settings.quizMode}
+                        isPlaying={isPlaying}
+                        onPlayPause={handlePlayPause}
+                        onNext={handleNext}
+                        onPrev={handlePrev}
+                        playMode={playMode}
+                        onToggleMode={() => setPlayMode(prev => prev === PlayMode.SEQUENTIAL ? PlayMode.RANDOM : PlayMode.SEQUENTIAL)}
+                        settings={settings}
+                        onSettingsChange={setSettings}
+                        availableVoices={voices}
                     />
                 ) : (
                     <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center justify-center min-h-[500px] text-slate-400">
                         <p>No words in this unit.</p>
                     </div>
                 )}
-                
-                <ControlPanel 
-                    isPlaying={isPlaying}
-                    onPlayPause={handlePlayPause}
-                    onNext={handleNext}
-                    onPrev={handlePrev}
-                    playMode={playMode}
-                    onToggleMode={() => setPlayMode(prev => prev === PlayMode.SEQUENTIAL ? PlayMode.RANDOM : PlayMode.SEQUENTIAL)}
-                    settings={settings}
-                    onSettingsChange={setSettings}
-                    availableVoices={voices}
-                />
             </div>
 
             {/* Right Column: List (Takes up 25% width, sticky) */}
