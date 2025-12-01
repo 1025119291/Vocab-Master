@@ -65,7 +65,7 @@ export const UnifiedWordCard: React.FC<UnifiedWordCardProps> = ({
             onClick={onSpeak}
             title="Click to Listen"
         >
-            <h2 className={`text-7xl md:text-9xl lg:text-[8rem] xl:text-[9rem] font-black text-slate-800 tracking-tighter transition-all duration-300 whitespace-nowrap ${isWordVisible ? 'opacity-100 blur-0' : 'opacity-10 blur-sm select-none'}`}>
+            <h2 className={`text-6xl md:text-8xl lg:text-9xl font-black text-slate-800 tracking-tighter transition-all duration-300 whitespace-nowrap ${isWordVisible ? 'opacity-100 blur-0' : 'opacity-10 blur-sm select-none'}`}>
             {item.word}
             </h2>
             
@@ -82,18 +82,18 @@ export const UnifiedWordCard: React.FC<UnifiedWordCardProps> = ({
         
         {/* Phonetic */}
         {item.phonetic && (
-          <p className="text-3xl md:text-4xl text-slate-400 font-mono mb-12">
+          <p className="text-2xl md:text-3xl text-slate-400 font-mono mb-12">
             {item.phonetic}
           </p>
         )}
         
         {/* Translation Section */}
         <div 
-            className={`flex items-center justify-center gap-4 w-full transition-all duration-300 cursor-pointer rounded-2xl p-4 overflow-hidden max-w-[95%] mx-auto ${!isTransVisible ? 'bg-slate-50 border border-dashed border-slate-300' : ''}`}
+            className={`flex items-center justify-center gap-4 w-full transition-all duration-300 cursor-pointer rounded-2xl p-4 max-w-[95%] mx-auto ${!isTransVisible ? 'bg-slate-50 border border-dashed border-slate-300' : ''}`}
             onClick={() => !isTransVisible && setIsTransVisible(true)}
         >
-            <div className={`relative w-full overflow-x-auto no-scrollbar flex justify-center ${!isTransVisible ? 'blur-md select-none opacity-20' : 'opacity-100 blur-0'}`}>
-                <p className="text-5xl md:text-7xl lg:text-8xl text-slate-700 font-bold whitespace-nowrap leading-tight px-2">
+            <div className={`relative w-full flex justify-center ${!isTransVisible ? 'blur-md select-none opacity-20' : 'opacity-100 blur-0'}`}>
+                <p className="text-3xl md:text-5xl lg:text-6xl text-slate-700 font-bold text-center leading-tight px-2 break-words">
                     {item.translation}
                 </p>
             </div>
