@@ -6,7 +6,7 @@
 
 This contains everything you need to run your app locally.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1gqAtXrJnNk3zMpqML3Bx49eZ4_Dth27R
+View your app ：https://client-ui-for-corplink.vercel.app/
 
 ## Run Locally
 
